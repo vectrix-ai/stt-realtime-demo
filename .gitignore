@@ -1,2 +1,3 @@
 mlx_models
 .env
+.cache
