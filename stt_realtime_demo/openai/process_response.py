@@ -23,7 +23,7 @@ async def receive_messages(websocket, audio_output_queue):
 
         elif data['type'] == 'conversation.item.created':
             #print("Conversation item created")
-            print(data)
+            #print(data)
             pass
 
         elif data['type'] == 'response.audio_transcript.delta':
@@ -38,17 +38,20 @@ async def receive_messages(websocket, audio_output_queue):
         elif data['type'] == 'session.created':
             print("Session created")
             #print(data)
+            pass
 
         elif data['type'] == 'conversation.item.input_audio_transcription.completed':
-            print("Input audio transcription completed")
+            #print("Input audio transcription completed")
             #print(data)
+            pass
 
         elif data['type'] == 'conversation.item.input_audio_transcription.completed':
             '''
             Returned when input audio transcription is enabled and a transcription succeeds.
             '''
-            print("Input audio transcription completed")
-            print(data)
+            #print("Input audio transcription completed")
+            #print(data)
+            pass
 
         elif data['type'] == 'response.content_part.added':
             '''
@@ -73,6 +76,15 @@ async def receive_messages(websocket, audio_output_queue):
             print(data['text'])
             #audio_stream = await client.stream(text=data['text'])
             #stream(audio_stream)
+            pass
+
+        elif data['type'] == 'response.function_call_arguments.done':
+            '''
+            Returned when the model-generated function call arguments are done streaming. 
+            Also emitted when a Response is interrupted, incomplete, or cancelled.
+            '''
+            print("Response function call arguments done")
+            print(data['arguments'])
 
         else:
             pass

@@ -27,16 +27,68 @@ async def connect_to_openai(audio_input_queue, audio_output_queue):
         await websocket.send(json.dumps({
             "type": "session.update",
             "session": {
-                "modalities": ["text", "audio"]
+                "modalities": ["text", "audio"],
+                "tools": [
+                    {
+                        "type": "function",
+                        "name": "calculate_distance_matrix",
+                        "description": "Calculate the driving distance and time between two locations using Google Maps.",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "origins": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "The starting point for the calculation (e.g., 'New York City, NY')."
+                                    },
+                                    "description": "A list of origin locations."
+                                },
+                                "destinations": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "The destination point for the calculation (e.g., 'Chicago, IL')."
+                                    },
+                                    "description": "A list of destination locations."
+                                },
+                                "mode": {
+                                    "type": "string",
+                                    "enum": ["driving", "walking", "bicycling", "transit"],
+                                    "default": "driving",
+                                    "description": "The mode of transportation (default is 'driving')."
+                                },
+                                "avoid": {
+                                    "type": "string",
+                                    "enum": ["tolls", "ferries", "highways"],
+                                    "default": "tolls",
+                                    "description": "What routes to avoid during the calculation (default is 'tolls')."
+                                },
+                                "units": {
+                                    "type": "string",
+                                    "enum": ["metric", "imperial"],
+                                    "default": "metric",
+                                    "description": "Units for the results (default is 'metric')."
+                                },
+                                "departure_time": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "default": "now",
+                                    "description": "The departure time for the calculation in ISO 8601 format (default is the current time)."
+                                }
+                            },
+                            "required": ["origins", "destinations"]
+                        }
+                    }
+                ]
             }
         }))
-
         # Send initial message (if needed)
         await websocket.send(json.dumps({
             "type": "response.create",
             "response": {
-                "modalities": ["text"],
-                "instructions": "Je bent een AI assistent die in het Nederlands praat.",
+                "modalities": ["text", "audio"],
+                "instructions": "You are an assistant from the company NDQ that helps drivers from trucks to plan and to estimate distances between two various locations.",
             }
         }))
 
