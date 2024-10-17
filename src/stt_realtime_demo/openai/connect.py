@@ -6,8 +6,8 @@ import websockets
 import json
 import asyncio
 
-from process_response import receive_messages
-from send import send_audio_data
+from stt_realtime_demo.openai.process_response import receive_messages
+from stt_realtime_demo.openai.send import send_audio_data
 
 api_key = os.getenv("OPENAI_API_KEY")
 url = "wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01"

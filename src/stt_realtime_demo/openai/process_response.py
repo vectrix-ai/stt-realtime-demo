@@ -1,6 +1,7 @@
 import json
 import base64
 import numpy as np
+from stt_realtime_demo.process_function_call import Tools
 
 async def receive_messages(websocket, audio_output_queue):
     while True:
@@ -83,8 +84,11 @@ async def receive_messages(websocket, audio_output_queue):
             Returned when the model-generated function call arguments are done streaming. 
             Also emitted when a Response is interrupted, incomplete, or cancelled.
             '''
-            print("Response function call arguments done")
-            print(data['arguments'])
+            tools = Tools(websocket)
 
+            print("Response function call arguments done")
+            print(data)
+            print(data['arguments'])
+            tools.call(call_id=data['call_id'], name=data['name'], arguments=json.loads(data['arguments']))
         else:
             pass

@@ -3,7 +3,7 @@ import numpy as np
 import sounddevice as sd
 import threading
 import queue
-from connect import connect_to_openai
+from stt_realtime_demo.openai.connect import connect_to_openai
 
 def audio_input_thread(audio_input_queue):
     with sd.InputStream(samplerate=24000, channels=1, dtype='int16') as stream:

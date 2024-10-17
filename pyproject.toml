@@ -12,3 +12,10 @@ dependencies = [
     "sounddevice>=0.5.0",
     "websockets>=13.1",
 ]
+
+[project.scripts]
+stt-realtime-demo = "stt_realtime_demo:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
